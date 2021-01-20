@@ -14,7 +14,7 @@ export class PaymentService {
 
   constructor(private http: HttpClient) { }
 
-  paymentUrl = 'http://localhost:3000/payment';
+  paymentUrl = 'https://frontend-luiz.herokuapp.com/payment';
 
   paymentPOST(payment: Payment){
 
