@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { Payment } from '../models/payment';
 import { PaymentService } from '../payment.service';
 
@@ -21,7 +20,7 @@ export class CardFormComponent implements OnInit {
     cardHolderName : ['', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+')]],
     expirationDate : ['', [Validators.required, Validators.maxLength(50)]],
     securityCode : ['', [Validators.minLength(3), Validators.maxLength(3), Validators.pattern('[0-9]*')]],
-    amount : ['', [Validators.required, Validators.pattern('[0-9]*')]]
+    amount : ['', [Validators.required]]
   });
 
   restrictDate(): void{
@@ -46,24 +45,19 @@ export class CardFormComponent implements OnInit {
 
   }
 
-  retornozada: Observable<Payment>
-
-  submitPayment(submit: boolean): void{
+  submitPayment(){
     const paymentObj: Payment = this.paymentForm.value;
-    if (submit){
-      this.service.paymentPOST(paymentObj);
+    console.log(paymentObj);
 
-      this.paymentForm.reset();
-    } else {
-      this.service.paymentPOST(paymentObj).unsubscribe;
-    }
+    this.service.paymentPOST(paymentObj);
+    this.paymentForm.reset();
   }
 
   ngOnInit(): void {
     this.restrictDate();
+
   }
 
   ngOnDestroy(): void{
-    this.submitPayment(false);
   }
 }

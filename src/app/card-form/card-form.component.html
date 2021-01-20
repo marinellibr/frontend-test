@@ -1,4 +1,4 @@
-<form [formGroup]="paymentForm" (ngSubmit)="submitPayment(true)">
+<form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
     <input 
         type="text" 
         id="number"
@@ -57,10 +57,8 @@
         formControlName="amount" 
         placeholder="Amount ($)"
         pattern="[0-9]*"
-        ui-number-mask
         required
         >
-
     <br>
 
     <button type="submit" [disabled]="!paymentForm.valid">
@@ -95,9 +93,6 @@
         </span>
 
         <!-- Amount error span -->
-        <span class="error" *ngIf="paymentForm.get('amount').touched && paymentForm.get('amount').hasError('pattern')">
-            Amount value should only contain numbers!
-        </span>
         <span class="error" *ngIf="paymentForm.get('amount').touched && paymentForm.get('amount').hasError('required')">
             Amount value is required!
         </span>
