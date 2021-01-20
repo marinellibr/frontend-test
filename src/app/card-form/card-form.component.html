@@ -1,0 +1,106 @@
+<form [formGroup]="paymentForm" (ngSubmit)="submitPayment(true)">
+    <input 
+        type="text" 
+        id="number"
+        (keypress)="numberOnly($event)" 
+        formControlName="cardNumber" 
+        placeholder="Credit Card Number" 
+        minlength="16" 
+        maxlength="16" 
+        appBlockPaste
+        inputmode="numeric" 
+        pattern="[0-9]*"
+        required 
+        >
+        
+    <br>
+    <input 
+        type="text" 
+        id="name"
+        formControlName="cardHolderName" 
+        placeholder="Card Holder Name"
+        maxlength="50" 
+        pattern="[a-zA-Z][a-zA-Z ]+"
+        appBlockPaste
+        required 
+        >
+
+    <br>
+    <input 
+        type="month" 
+        id="date"
+        formControlName="expirationDate" 
+        placeholder="Expiration Date" 
+        [attr.min]="pastDate" 
+        appBlockPaste
+        required 
+        >
+
+    <br>
+    <input 
+        type="text" 
+        id="code"
+        (keypress)="numberOnly($event)" 
+        formControlName="securityCode" 
+        placeholder="Security Code"  
+        minlength="3" 
+        maxlength="3" 
+        inputmode="numeric"
+        pattern="[0-9]*"
+        appBlockPaste
+        >
+
+    <br>
+    <input 
+        type="text" 
+        id="value"
+        formControlName="amount" 
+        placeholder="Amount ($)"
+        pattern="[0-9]*"
+        ui-number-mask
+        required
+        >
+
+    <br>
+
+    <button type="submit" [disabled]="!paymentForm.valid">
+        Submit Payment
+    </button>
+
+    <div class="error-messages">
+        <!-- Name error span -->
+        <span class="error" *ngIf="paymentForm.get('cardHolderName').touched && paymentForm.get('cardHolderName').hasError('pattern')">
+            Name should only contain letters!
+        </span>
+        <span class="error" *ngIf="paymentForm.get('cardHolderName').touched && paymentForm.get('cardHolderName').hasError('required')">
+            Name is required!
+        </span>
+
+        <!-- Number error span -->
+        <span class="error" *ngIf="paymentForm.get('cardNumber').touched && paymentForm.get('cardNumber').hasError('pattern')">
+            Card number should only contain numbers!
+        </span>
+        <span class="error" *ngIf="paymentForm.get('cardNumber').touched && paymentForm.get('cardNumber').hasError('required')">
+            Card number is required!
+        </span>
+
+        <!-- Date error span -->
+        <span class="error" *ngIf="paymentForm.get('expirationDate').touched && paymentForm.get('expirationDate').hasError('required')">
+            Date is required!
+        </span>
+
+        <!-- Security code error span -->
+        <span class="error" *ngIf="paymentForm.get('securityCode').touched && paymentForm.get('securityCode').hasError('pattern')">
+            Security code should only contain numbers!
+        </span>
+
+        <!-- Amount error span -->
+        <span class="error" *ngIf="paymentForm.get('amount').touched && paymentForm.get('amount').hasError('pattern')">
+            Amount value should only contain numbers!
+        </span>
+        <span class="error" *ngIf="paymentForm.get('amount').touched && paymentForm.get('amount').hasError('required')">
+            Amount value is required!
+        </span>
+    </div>
+
+</form>
